@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-  var num = 1;
+  var num = $("#goalscorerTable tr").length;
 
   $("#goal_add").click(function(event){
     event.preventDefault();
@@ -7,7 +7,7 @@ jQuery(document).ready(function($) {
     console.log("Appending table");
     $("#goalscorerTable").append(
       '<tr><td>' + num + '</td>' +
-      '<td> <input type="text" size="3" name="goal_min' + num + '"></input></td>' +
+      '<td> <input type="text" size="3" name="goal' + num + '"></input></td>' +
       '<td> <input type="text" size="10" name="goal_name' + num + '"></input></td>' +
       '<td> <input type="checkbox" name="goal_home' + num + '"></input></td></tr>'
     );
