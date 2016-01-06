@@ -7,9 +7,9 @@ jQuery(document).ready(function($) {
     console.log("Appending table");
     $("#goalscorerTable").append(
       '<tr><td>' + num + '</td>' +
-      '<td> <input type="text" size="3" name="goal' + num + '"></input></td>' +
-      '<td> <input type="text" size="10" name="goal_name' + num + '"></input></td>' +
-      '<td> <input type="checkbox" name="goal_home' + num + '"></input></td></tr>'
+      '<td> <input type="text" size="3" name="goal' + num + '[min]"></input></td>' +
+      '<td> <input type="text" size="10" name="goal' + num + '[name]"></input></td>' +
+      '<td> <input type="checkbox" name="goal' + num + '[home]"></input></td></tr>'
     );
     num++;
   });
