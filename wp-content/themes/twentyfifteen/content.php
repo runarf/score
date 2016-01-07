@@ -21,11 +21,14 @@
 		$values = get_post_meta(
 			get_the_ID()
 		);
-		$score_home = isset( $values['score_home']) ? $values['score_home'][0] : '-1';
-		$score_away = isset( $values['score_away']) ? $values['score_away'][0] : '-1';
 		$score = '';
-		if ($score_home >= 0 && $score_away >= 0) {
-			$score = '<span class="title_score" style="position:absolute; right:0;">' . $score_home . ' - ' . $score_away . '</span>';
+		if ( isset( $values['is_game'])) {
+			$score_home = isset( $values['score_home']) ? $values['score_home'][0] : '-1';
+			$score_away = isset( $values['score_away']) ? $values['score_away'][0] : '-1';
+			$score = '';
+			if ($score_home >= 0 && $score_away >= 0) {
+				$score = '<span class="title_score" style="position:absolute; right:0;">' . $score_home . ' - ' . $score_away . '</span>';
+			}
 		}
 			if ( is_single() ) :
 				the_title( '<h1 class="entry-title">', $score . '</h1>' );
@@ -51,7 +54,9 @@
 				'pagelink'    => '<span class="screen-reader-text">' . __( 'Page', 'twentyfifteen' ) . ' </span>%',
 				'separator'   => '<span class="screen-reader-text">, </span>',
 			) );
+			if ( isset( $values['is_game'])) {
 			get_template_part( 'goals' );
+		}
 		?>
 	</div><!-- .entry-content -->
 

@@ -37,6 +37,26 @@ function rfscore_register_meta_box() {
     'side',
     'high'
   );
+
+  add_meta_box(
+    'rf-game-meta',
+    'Is this a game',
+    'rf_game_meta_box',
+    'post',
+    'side',
+    'high'
+  );
+}
+
+function rf_game_meta_box() {
+  global $post;
+  $checked = get_post_meta( $post->ID, 'is_game', true);
+  echo '<label for="is_game">Click if this post is about a game</label><br>';
+  if ( empty($checked)) {
+    echo '<input type="checkbox" name="is_game"></input>';
+  } else{
+    echo '<input type="checkbox" name="is_game" checked="checked"></input>';
+  }
 }
 
 function rf_score_meta_box() {
@@ -70,6 +90,10 @@ function rf_score_save_data( $post_id) {
     if( !current_user_can( 'edit_post', $post_id ) ) return;
 
     wp_verify_nonce( 'meta-box-save', 'rfscore-plugin' );
+    //write_log($_POST);
+    if ( isset ($_POST['is_game'])) {
+      update_post_meta( $post_id, 'is_game', True);
+    }
 
     if ( isset ($_POST['score_home'])) {
       update_post_meta( $post_id, 'score_home', absint($_POST['score_home']));
@@ -125,7 +149,7 @@ function rf_goals_meta_box() {
     <?php
       $num_goals = get_post_meta( $post->ID, 'num_goals', true);
       echo '<tr><td><input id="numGoals" type=hidden name="num_goals" value="' . $num_goals . '"></input></td></tr>';
-      
+
       $i = 1;
       $goals = get_post_meta( $post->ID, '_goals', true);
       while(isset($goals[$i]) && $num_goals >= $i) {
