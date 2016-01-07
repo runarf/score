@@ -93,12 +93,15 @@ function rf_score_save_data( $post_id) {
 
     $goals = $_POST['goal'];
     write_log($goals);
+    $goal_array = array();
     while( isset( $goals[$i])){
       $goal_data = $goals[$i];
+      $goal_array[$i] = $goal_data;
       write_log($goal_data);
       update_post_meta( $post_id, '_goal[' . $i . ']', $goal_data);
       $i++;
     }
+    update_post_meta( $post_id, '_goals', $goal_array);
   }
 }
 
@@ -122,10 +125,11 @@ function rf_goals_meta_box() {
     <?php
       $num_goals = get_post_meta( $post->ID, 'num_goals', true);
       echo '<tr><td><input id="numGoals" type=hidden name="num_goals" value="' . $num_goals . '"></input></td></tr>';
+      
       $i = 1;
-      $values = get_post_meta( $post->ID, '_goal[' . $i . ']', true );
-      while($values && $num_goals >= $i) {
-        print_r (" i = " . $i . " n = " . $num_goals);
+      $goals = get_post_meta( $post->ID, '_goals', true);
+      while(isset($goals[$i]) && $num_goals >= $i) {
+        $values = $goals[$i];
         $min = $values['min'];
         $name = $values['name'];
         $home = isset( $values['home']) ? $values['home'] : '';
@@ -140,8 +144,6 @@ function rf_goals_meta_box() {
         }
         echo '</tr>';
         $i++;
-        $values = get_post_meta( $post->ID, '_goal[' . $i . ']', true );
-
       }
      ?>
     </tbody>
