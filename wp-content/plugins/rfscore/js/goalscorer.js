@@ -5,11 +5,12 @@ jQuery(document).ready(function($) {
     event.preventDefault();
     console.log("Number is " + num);
     console.log("Appending table");
+    var goalNum = 'goal[' + num + ']';
     $("#goalscorerTable").append(
       '<tr><td>' + num + '</td>' +
-      '<td> <input type="text" size="3" name="goal' + num + '[min]"></input></td>' +
-      '<td> <input type="text" size="10" name="goal' + num + '[name]"></input></td>' +
-      '<td> <input type="checkbox" name="goal' + num + '[home]"></input></td></tr>'
+      '<td> <input type="text" size="3" name="' + goalNum +'[min]"></input></td>' +
+      '<td> <input type="text" size="10" name="' + goalNum + '[name]"></input></td>' +
+      '<td> <input type="checkbox" name="' + goalNum +'[home]"></input></td></tr>'
     );
     num++;
   });

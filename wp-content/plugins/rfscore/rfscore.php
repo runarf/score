@@ -46,13 +46,17 @@ function rf_score_meta_box() {
   );
   $score_home = isset( $values['score_home']) ? $values['score_home'][0] : '';
   $score_away = isset( $values['score_away']) ? $values['score_away'][0] : '';
+  $team_home = isset( $values['team_home']) ? $values['team_home'][0] : '';
+  $team_away = isset( $values['team_away']) ? $values['team_away'][0] : '';
   wp_nonce_field( 'meta-box-save', 'rfscore-plugin' );
-
   ?>
-  <label for="score_home">Score home team</label>
-  <input type="text" name="score_home" value="<?php echo $score_home ?>">
-  <label for="score_away">Score away team</label>
-  <input type="text" name="score_away" value="<?php echo $score_away ?>">
+
+  <label>Home team</label>
+  <input type="text" name="team_home" placeholder="Home team" value="<?php echo $team_home ?>">
+  <input type="text" name="score_home" placeholder="Score home team" value="<?php echo $score_home ?>">
+  <br><label>Away team</label>
+  <input type="text" name="team_away" placeholder="Away team" value="<?php echo $team_away ?>">
+  <input type="text" name="score_away" placeholder="Score away team" value="<?php echo $score_away ?>">
   <?php
 }
 
@@ -73,27 +77,23 @@ function rf_score_save_data( $post_id) {
     if ( isset ($_POST['score_away'])) {
       update_post_meta( $post_id, 'score_away', absint($_POST['score_away']));
     }
-    $i = 1;
-    write_log( $_POST);
-    while( isset( $_POST['goal' . $i])){
-      $goal_data = $_POST['goal' . $i];
-      update_post_meta( $post_id, '_goal' . $i, $goal_data);
-      /*write_log ('hallo');
-      $goal = $_POST['goal' . $i];
-      write_log ($goal);
-
-      //update_post_meta( $post_id, 'goal' . $i . '[min]', absint($goal['min']));
-      //update_post_meta( $post_id, 'goal' . $i . '[name]', esc_attr($goal['name']));
-      $home = 0;
-      if ( isset( $_POST['goal' . $i . '[home]']) && $_POST['goal' . $i . '[home]'] == 1) {
-        $home = 1;
-      }
-      $goal_data = array( "min" => absint($goal['min']), "name" =>esc_attr($goal['name']), "home" => $home);
-      update_post_meta( $post_id, '_goal' . $i , $goal_data);
-      */
-      $i++;
+    if ( isset ($_POST['team_home'])) {
+      update_post_meta( $post_id, 'team_home', esc_attr($_POST['team_home']));
     }
 
+    if ( isset ($_POST['team_away'])) {
+      update_post_meta( $post_id, 'team_away', esc_attr($_POST['team_away']));
+    }
+
+    $i = 1;
+    //write_log($_POST);
+    $goals = $_POST['goal'];
+    while( isset( $goals[$i])){
+      $goal_data = $goals[$i];
+      write_log($goal_data);
+      update_post_meta( $post_id, '_goal[' . $i . ']', $goal_data);
+      $i++;
+    }
   }
 }
 
@@ -101,7 +101,6 @@ function rf_score_save_data( $post_id) {
 
 function rf_goals_meta_box() {
   global $post;
-
 
   wp_nonce_field( 'meta-box-save', 'rfscore-plugin');
   ?>
@@ -117,27 +116,23 @@ function rf_goals_meta_box() {
     <tbody>
     <?php
       $i = 1;
-      //$values = get_post_meta( $post->ID, 'goal1' );
-      $values = get_post_meta( $post->ID, '_goal' . $i, true );
+      $values = get_post_meta( $post->ID, '_goal[' . $i . ']', true );
       print_r ($values);
-      print_r ('values is ' . (bool) $values );
       while($values) {
         $min = $values['min'];
         $name = $values['name'];
-        $home = $values['home'];
-        print_r ('name is ' . $name);
+        $home = isset( $values['home']) ? $values['home'] : '';
 
         echo '<tr><td>' . $i . '</td>';
-        echo '<td><input type="text" size="3" name="goal' . $i . '[min]" value="' . $min . '"></input></td>';
-        echo '<td><input type="text" size="10" name="goal' . $i . '[name]" value="' . $name . '"></input></td>';
-
+        echo '<td><input type="text" size="3" name="goal[' . $i . '][min]" value="' . $min . '"></input></td>';
+        echo '<td><input type="text" size="10" name="goal[' . $i . '][name]" value="' . $name . '"></input></td>';
         if ($home) {
-          echo '<td><input type="checkbox" name="goal' . $i . '[home]" checked="checked"></input></td>';
+          echo '<td><input type="checkbox" name="goal[' . $i . '][home]" checked="checked"></input></td>';
         } else {
-          echo '<td><input type="checkbox" name="goal' . $i . '[home]"></input></td>';
+          echo '<td><input type="checkbox" name="goal[' . $i . '][home]"></input></td>';
         }
         $i++;
-        $values = get_post_meta( $post->ID, '_goal' . $i, true );
+        $values = get_post_meta( $post->ID, '_goal[' . $i . ']', true );
       }
      ?>
     </tbody>
@@ -145,7 +140,6 @@ function rf_goals_meta_box() {
 <button id="goal_add">Add goal</button>
 <button id="goal_delete">Delete goal</button>
   <?php
-
 }
 
  ?>

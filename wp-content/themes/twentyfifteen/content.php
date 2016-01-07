@@ -51,6 +51,7 @@
 				'pagelink'    => '<span class="screen-reader-text">' . __( 'Page', 'twentyfifteen' ) . ' </span>%',
 				'separator'   => '<span class="screen-reader-text">, </span>',
 			) );
+			get_template_part( 'goals' );
 		?>
 	</div><!-- .entry-content -->
 
