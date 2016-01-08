@@ -9,4 +9,5 @@ wp-content/plugins/*
 
 !wp-content/themes/
 wp-content/themes/*
-!wp-content/themes/twentyfifteen/
+!wp-content/themes/serene/
+!wp-content/themes/rfserene/
