@@ -127,15 +127,20 @@
 				}
 			}
 		}
-
-		et_highlight_current_menu_item( $current_menu_item, false );
+		if ($(window).width() > 480) {
+			et_highlight_current_menu_item( $current_menu_item, false );
+		}
 
 		$top_menu.find( '> ul > li' ).hover( function() {
-			et_highlight_current_menu_item( $(this), true );
+			if ($(window).width() > 480) {
+				et_highlight_current_menu_item( $(this), true );
+			}
 		} );
 
 		$top_menu.find( '> ul' ).mouseleave( function() {
-			et_highlight_current_menu_item( $current_menu_item, true );
+			if ($(window).width() > 480) {
+				et_highlight_current_menu_item( $current_menu_item, true );
+			}
 		} );
 	} );
 })(jQuery)

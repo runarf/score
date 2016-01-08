@@ -1721,10 +1721,10 @@ img.alignright {
 		width: 768px;
 	}
 	#top-menu,#et-social-icons {
-		display: none;
+		//display: none;
 	}
 	#et_mobile_nav_menu {
-		display: block;
+		//display: block;
 	}
 	article.post {
 		margin-bottom: 60px;
@@ -1890,10 +1890,10 @@ img.alignright {
 		width: 440px;
 	}
 	#top-menu,#et-social-icons {
-		display: none;
+		//display: none;
 	}
 	#et_mobile_nav_menu {
-		display: block;
+		//display: block;
 	}
 	article.post {
 		margin-bottom: 20px;
@@ -2143,6 +2143,14 @@ img.alignright {
 	}
 	article.post {
 		margin-bottom: 20px;
+	}
+
+	#top-menu,#et-social-icons {
+		//display: none;
+	}
+	#et_mobile_nav_menu {
+		//display: block;
+
 	}
 	.meta-date {
 		font-size: 20px;

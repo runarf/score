@@ -7,3 +7,15 @@ Template: serene
 Version: 08012016
 */
 @import url('../serene/style.css');
+
+#main-header {
+  margin-top: 20px;
+}
+
+#top-menu {
+  float: none;
+}
+
+#menu-menu-1 {
+  text-align: center;
+}

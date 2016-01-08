@@ -50,7 +50,7 @@
 		<?php
 		if ( is_single() ) {
 			the_content();
-
+			get_template_part( 'goals' );
 			wp_link_pages( array(
 				'before'         => '<p><strong>' . esc_attr__( 'Pages', 'Serene' ) . ':</strong> ',
 				'after'          => '</p>',
